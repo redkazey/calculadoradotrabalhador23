@@ -96,6 +96,8 @@ header h1 {
 
 .opcoes input[type="radio"] {
     accent-color: #27ae60;
+    width: 16px;
+    height: 16px;
 }
 
 .botao-calcular {
@@ -122,6 +124,7 @@ header h1 {
     font-size: 1.1rem;
     margin-bottom: 15px;
     text-align: center;
+    font-weight: 600;
 }
 
 .bloco-valores {
@@ -135,6 +138,7 @@ header h1 {
     color: #ffffff;
     font-size: 1rem;
     margin-bottom: 10px;
+    font-weight: 500;
 }
 
 .opcao {
@@ -157,6 +161,7 @@ header h1 {
     color: #ffffff;
     margin-bottom: 8px;
     font-size: 1rem;
+    font-weight: 600;
 }
 
 .opcao p {
@@ -187,9 +192,19 @@ header h1 {
     font-weight: 600;
 }
 
+/* CONCLUSÃO MELHORADA */
 .conclusao {
-    background: rgba(40, 40, 40, 0.85);
-    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(50, 50, 50, 0.9);
+    border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.conclusao h2 {
+    color: #ffffff;
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    text-align: center;
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
 
 .conclusao p {
@@ -197,12 +212,14 @@ header h1 {
     font-weight: 500;
     text-align: center;
     font-size: 1rem;
-    line-height: 1.7;
+    line-height: 1.8;
+    padding: 8px;
 }
 
 .aviso {
     font-size: 0.85rem;
     color: rgba(255,255,255,0.8);
+    line-height: 1.7;
 }
 
 /* Ajuste para celular */
@@ -212,6 +229,9 @@ header h1 {
     }
     header h1 {
         font-size: 1.3rem;
+    }
+    .conclusao h2 {
+        font-size: 1.1rem;
     }
 }
 

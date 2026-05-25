@@ -50,12 +50,36 @@ header h1 {
     font-weight: 600;
 }
 
+/* ✅ CAIXA DO NOME MAIOR E MELHORADA */
+#nomeUsuario {
+    width: 100%;
+    padding: 18px 20px;
+    background: rgba(60, 60, 60, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 1.1rem;
+    outline: none;
+    transition: all 0.3s;
+    min-height: 60px;
+}
+
+#nomeUsuario:focus {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(80, 80, 80, 0.7);
+}
+
+#nomeUsuario::placeholder {
+    color: rgba(255,255,255,0.5);
+    font-size: 1rem;
+}
+
 /* OPÇÕES DE TIPO DE SAÍDA */
 .opcao-tipo {
     background: rgba(255,255,255,0.1);
     border: 1px solid rgba(255,255,255,0.2);
     border-radius: 12px;
-    padding: 15px;
+    padding: 18px 15px;
     margin-bottom: 12px;
     cursor: pointer;
     transition: all 0.3s;
@@ -69,12 +93,14 @@ header h1 {
 .opcao-tipo h3 {
     color: #ffffff;
     font-size: 1rem;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
+    line-height: 1.4;
 }
 
 .opcao-tipo .resumo {
     color: rgba(255,255,255,0.7);
     font-size: 0.85rem;
+    line-height: 1.4;
 }
 
 .opcao-tipo.nao-sei {
@@ -85,10 +111,11 @@ header h1 {
 .explicacao {
     background: rgba(255,255,255,0.1);
     border-radius: 12px;
-    padding: 15px;
+    padding: 18px;
     color: #ffffff;
     margin-bottom: 20px;
     line-height: 1.8;
+    font-size: 0.95rem;
 }
 
 .pergunta-confirmar {
@@ -106,13 +133,14 @@ header h1 {
 }
 
 .botao-sim, .botao-nao, .botao-proximo {
-    padding: 12px 20px;
+    padding: 14px 20px;
     border: none;
     border-radius: 10px;
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
+    min-height: 48px;
 }
 
 .botao-sim {
@@ -129,7 +157,7 @@ header h1 {
     background: #3498db;
     color: white;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 12px;
 }
 
 .botao-sim:hover, .botao-nao:hover, .botao-proximo:hover {
@@ -141,7 +169,7 @@ header h1 {
     background: rgba(46, 204, 113, 0.2);
     border: 1px solid rgba(46, 204, 113, 0.4);
     border-radius: 12px;
-    padding: 15px;
+    padding: 18px;
     color: #ffffff;
     text-align: center;
     font-size: 1rem;
@@ -170,7 +198,7 @@ header h1 {
 .pergunta input[type="text"],
 .pergunta input[type="date"] {
     width: 100%;
-    padding: 12px 16px;
+    padding: 14px 16px;
     background: rgba(60, 60, 60, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
@@ -178,6 +206,7 @@ header h1 {
     font-size: 1rem;
     outline: none;
     transition: all 0.3s;
+    min-height: 48px;
 }
 
 .pergunta input:focus {
@@ -188,7 +217,7 @@ header h1 {
 .opcoes {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     margin-top: 8px;
 }
 
@@ -199,17 +228,19 @@ header h1 {
     align-items: center;
     gap: 8px;
     color: #ffffff;
+    font-size: 0.9rem;
+    padding: 4px 0;
 }
 
 .opcoes input[type="radio"] {
     accent-color: #27ae60;
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
 }
 
 .botao-calcular {
     width: 100%;
-    padding: 14px;
+    padding: 16px;
     background: rgba(39, 174, 96, 0.85);
     color: white;
     border: none;
@@ -219,6 +250,7 @@ header h1 {
     cursor: pointer;
     backdrop-filter: blur(4px);
     transition: all 0.3s;
+    min-height: 52px;
 }
 
 .botao-calcular:hover {
@@ -237,31 +269,32 @@ header h1 {
 .bloco-valores {
     background: rgba(50, 50, 50, 0.5);
     border-radius: 12px;
-    padding: 15px;
+    padding: 18px;
     margin-bottom: 15px;
 }
 
 .bloco-valores h3 {
     color: #ffffff;
     font-size: 1rem;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     font-weight: 500;
 }
 
 .item {
     display: flex;
     justify-content: space-between;
-    padding: 6px 0;
+    padding: 8px 0;
     color: #ffffff;
     font-size: 0.9rem;
     border-bottom: 1px solid rgba(255,255,255,0.1);
+    line-height: 1.5;
 }
 
 .item.total, .item.total-final {
     font-weight: 600;
     font-size: 0.95rem;
     border-bottom: none;
-    padding-top: 8px;
+    padding-top: 10px;
     margin-top: 4px;
 }
 
@@ -308,6 +341,10 @@ header h1 {
     }
     .conclusao h2 {
         font-size: 1.1rem;
+    }
+    #nomeUsuario {
+        font-size: 1rem;
+        padding: 16px 18px;
     }
 }
 

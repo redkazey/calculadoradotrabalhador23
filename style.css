@@ -6,20 +6,20 @@
 }
 
 body {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-color: #0a0a0a; /* Fundo preto escuro */
     min-height: 100vh;
     padding: 16px;
     line-height: 1.6;
 }
 
-/* Efeito Glass do iPhone */
+/* Efeito Glass do iPhone - adaptado para fundo escuro */
 .glass {
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(30, 30, 30, 0.75);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     padding: 20px;
     margin-bottom: 20px;
 }
@@ -30,7 +30,7 @@ body {
 }
 
 header h1 {
-    color: #fff;
+    color: #ffffff;
     text-align: center;
     font-size: 1.4rem;
     margin-bottom: 8px;
@@ -39,7 +39,7 @@ header h1 {
 
 .descricao {
     text-align: center;
-    color: rgba(255,255,255,0.9);
+    color: rgba(255,255,255,0.85);
     font-size: 0.9rem;
 }
 
@@ -49,14 +49,14 @@ header h1 {
 
 .pergunta label {
     display: block;
-    color: #fff;
+    color: #ffffff;
     font-weight: 500;
     margin-bottom: 8px;
     font-size: 0.95rem;
 }
 
 .pergunta small {
-    color: rgba(255,255,255,0.7);
+    color: rgba(255,255,255,0.6);
     font-size: 0.8rem;
 }
 
@@ -64,18 +64,18 @@ header h1 {
 .pergunta input[type="date"] {
     width: 100%;
     padding: 12px 16px;
-    background: rgba(255,255,255,0.2);
-    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(60, 60, 60, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
-    color: #fff;
+    color: #ffffff;
     font-size: 1rem;
     outline: none;
     transition: all 0.3s;
 }
 
 .pergunta input:focus {
-    border-color: rgba(255,255,255,0.6);
-    background: rgba(255,255,255,0.3);
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(80, 80, 80, 0.7);
 }
 
 .opcoes {
@@ -91,12 +91,17 @@ header h1 {
     display: flex;
     align-items: center;
     gap: 8px;
+    color: #ffffff;
+}
+
+.opcoes input[type="radio"] {
+    accent-color: #27ae60;
 }
 
 .botao-calcular {
     width: 100%;
     padding: 14px;
-    background: rgba(39, 174, 96, 0.8);
+    background: rgba(39, 174, 96, 0.85);
     color: white;
     border: none;
     border-radius: 12px;
@@ -113,21 +118,21 @@ header h1 {
 }
 
 .secao h2 {
-    color: #fff;
+    color: #ffffff;
     font-size: 1.1rem;
     margin-bottom: 15px;
     text-align: center;
 }
 
 .bloco-valores {
-    background: rgba(255,255,255,0.15);
+    background: rgba(50, 50, 50, 0.5);
     border-radius: 12px;
     padding: 15px;
     margin-bottom: 15px;
 }
 
 .bloco-valores h3 {
-    color: #fff;
+    color: #ffffff;
     font-size: 1rem;
     margin-bottom: 10px;
 }
@@ -139,17 +144,17 @@ header h1 {
 }
 
 .vermelha {
-    background: rgba(231, 76, 60, 0.2);
-    border: 1px solid rgba(231, 76, 60, 0.3);
+    background: rgba(231, 76, 60, 0.25);
+    border: 1px solid rgba(231, 76, 60, 0.4);
 }
 
 .verde {
-    background: rgba(46, 204, 113, 0.2);
-    border: 1px solid rgba(46, 204, 113, 0.3);
+    background: rgba(46, 204, 113, 0.25);
+    border: 1px solid rgba(46, 204, 113, 0.4);
 }
 
 .opcao h3 {
-    color: #fff;
+    color: #ffffff;
     margin-bottom: 8px;
     font-size: 1rem;
 }
@@ -164,7 +169,7 @@ header h1 {
     display: flex;
     justify-content: space-between;
     padding: 6px 0;
-    color: #fff;
+    color: #ffffff;
     font-size: 0.9rem;
     border-bottom: 1px solid rgba(255,255,255,0.1);
 }
@@ -183,12 +188,12 @@ header h1 {
 }
 
 .conclusao {
-    background: rgba(255,255,255,0.3);
-    border: 1px solid rgba(255,255,255,0.4);
+    background: rgba(40, 40, 40, 0.85);
+    border: 1px solid rgba(255,255,255,0.15);
 }
 
 .conclusao p {
-    color: #2c3e50;
+    color: #ffffff;
     font-weight: 500;
     text-align: center;
     font-size: 1rem;
@@ -197,7 +202,7 @@ header h1 {
 
 .aviso {
     font-size: 0.85rem;
-    color: rgba(255,255,255,0.9);
+    color: rgba(255,255,255,0.8);
 }
 
 /* Ajuste para celular */

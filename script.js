@@ -3,6 +3,34 @@ let nomeUsuario = '';
 let tipoSaida = '';
 let dadosCalculo = {};
 
+// ✅ MOSTRAR OU ESCONDER CAMPO DO VALOR EXATO DO FGTS
+document.addEventListener('DOMContentLoaded', function() {
+    const opcoesFGTS = document.querySelectorAll('input[name="tipoFGTS"]');
+    const campoExato = document.getElementById('campoFGTSexato');
+
+    opcoesFGTS.forEach(opcao => {
+        opcao.addEventListener('change', function() {
+            if (this.value === 'exato') {
+                campoExato.style.display = 'block';
+            } else {
+                campoExato.style.display = 'none';
+            }
+        });
+    });
+
+    // Formatar valor do FGTS
+    document.getElementById('valorFGTSexato').addEventListener('input', function(e) {
+        let valor = e.target.value;
+        let apenasNumeros = valor.replace(/\D/g, '');
+        if (apenasNumeros) {
+            let numero = (parseInt(apenasNumeros) / 100).toFixed(2);
+            e.target.value = numero;
+        } else {
+            e.target.value = '';
+        }
+    });
+});
+
 // ETAPA 1: IR PARA ESCOLHA DO TIPO
 function proximaEtapa() {
     nomeUsuario = document.getElementById('nomeUsuario').value.trim();
@@ -45,12 +73,11 @@ function selecionarTipo(tipo) {
             `;
             break;
 
-        // ✅ EXPLICAÇÃO DA NOVA OPÇÃO
         case 'pedidoComAcordo':
             texto = `
                 <h3>🟡🤝 Pedi para sair mas fiz acordo com o patrão</h3>
                 <p><strong>O que significa:</strong> Você quis sair por vontade própria, mas conversou com o dono e combinaram valores a mais, ele concordou em pagar parte da multa ou outros benefícios.</p>
-                <p><strong>Seus direitos:</strong> Você recebe saldo, férias e 13º proporcional. <strong>Ganha entre 20% a 32% de multa sobre o FGTS</strong> (depois do que combinou). Não tem direito a seguro-desemprego.</p>
+                <p><strong>Seus direitos:</strong> Você recebe saldo, férias e 13º proporcional. <strong>Ganha até 32% de multa sobre o FGTS</strong> conforme combinado. Não tem direito a seguro-desemprego.</p>
             `;
             break;
 
@@ -92,7 +119,7 @@ function confirmarTipo(sim) {
     }
 }
 
-// ETAPA 4: IDENTIFICAR QUEM NÃO SABE (ATUALIZADO)
+// ETAPA 4: IDENTIFICAR QUEM NÃO SABE
 function identificarTipo() {
     let quemQuis = document.querySelector('input[name="quemQuis"]:checked').value;
     let fezAcordo = document.querySelector('input[name="fezAcordo"]:checked').value;
@@ -201,6 +228,8 @@ document.getElementById('formulario').addEventListener('submit', function(e) {
     const salarioBruto = parseFloat(document.getElementById('salarioBruto').value);
     const opcaoFerias = document.querySelector('input[name="ferias"]:checked').value;
     const vaiCumprirAviso = document.querySelector('input[name="aviso"]:checked').value === 'cumprir';
+    const tipoFGTS = document.querySelector('input[name="tipoFGTS"]:checked').value;
+    const valorFGTSexato = parseFloat(document.getElementById('valorFGTSexato').value || 0);
 
     const hoje = new Date();
     const anos = hoje.getFullYear() - admissao.getFullYear();
@@ -227,7 +256,6 @@ document.getElementById('formulario').addEventListener('submit', function(e) {
         let valorAviso = 0;
         let percentualMulta = 0;
 
-        // ✅ CÁLCULO DA NOVA OPÇÃO
         switch(tipoSaida) {
             case 'semJustaCausa':
                 valorAviso = salarioBruto;
@@ -237,9 +265,9 @@ document.getElementById('formulario').addEventListener('submit', function(e) {
                 valorAviso = salarioBruto / 2;
                 percentualMulta = 0.32;
                 break;
-            case 'pedidoComAcordo': // NOVA OPÇÃO
+            case 'pedidoComAcordo':
                 valorAviso = 0;
-                percentualMulta = 0.25; // média do que geralmente combinam
+                percentualMulta = 0.32; // máximo permitido
                 break;
             case 'indireta':
                 valorAviso = salarioBruto;
@@ -264,14 +292,21 @@ document.getElementById('formulario').addEventListener('submit', function(e) {
 
         const totalEmpresa = saldoSalario + valorFerias + valor13 + valorAviso - totalDescontos;
 
-        const saldoFGTS = (salarioBruto * 0.08) * meses;
+        // ✅ CÁLCULO DO FGTS - AUTOMÁTICO OU VALOR EXATO
+        let saldoFGTS;
+        if (tipoFGTS === 'exato') {
+            saldoFGTS = valorFGTSexato;
+        } else {
+            saldoFGTS = (salarioBruto * 0.08) * meses;
+        }
+
         const multaFGTS = saldoFGTS * percentualMulta;
         const totalFGTS = saldoFGTS + multaFGTS;
 
         const totalGeral = totalEmpresa + totalFGTS;
 
         return {
-            saldoSalario, valorFerias, valor13, valorAviso, multaFGTS, totalEmpresa, totalFGTS, totalGeral
+            saldoSalario, valorFerias, valor13, valorAviso, multaFGTS, saldoFGTS, totalEmpresa, totalFGTS, totalGeral
         };
     }
 
@@ -295,6 +330,7 @@ document.getElementById('formulario').addEventListener('submit', function(e) {
     document.getElementById('valor13_1').textContent = formatarMoeda(resultadoSemFerias.valor13);
     document.getElementById('valorAviso1').textContent = formatarMoeda(resultadoSemFerias.valorAviso);
     document.getElementById('valorMulta1').textContent = formatarMoeda(resultadoSemFerias.multaFGTS);
+    document.getElementById('saldoFGTS1').textContent = formatarMoeda(resultadoSemFerias.saldoFGTS);
     document.getElementById('totalEmpresa1').textContent = formatarMoeda(resultadoSemFerias.totalEmpresa);
     document.getElementById('fgtsTotal1').textContent = formatarMoeda(resultadoSemFerias.totalFGTS);
     document.getElementById('totalGeral1').textContent = formatarMoeda(resultadoSemFerias.totalGeral);
@@ -304,6 +340,7 @@ document.getElementById('formulario').addEventListener('submit', function(e) {
     document.getElementById('valor13_2').textContent = formatarMoeda(resultadoComFerias.valor13);
     document.getElementById('valorAviso2').textContent = formatarMoeda(resultadoComFerias.valorAviso);
     document.getElementById('valorMulta2').textContent = formatarMoeda(resultadoComFerias.multaFGTS);
+    document.getElementById('saldoFGTS2').textContent = formatarMoeda(resultadoComFerias.saldoFGTS);
     document.getElementById('totalEmpresa2').textContent = formatarMoeda(resultadoComFerias.totalEmpresa);
     document.getElementById('fgtsTotal2').textContent = formatarMoeda(resultadoComFerias.totalFGTS);
     document.getElementById('totalGeral2').textContent = formatarMoeda(resultadoComFerias.totalGeral);
@@ -313,7 +350,7 @@ document.getElementById('formulario').addEventListener('submit', function(e) {
     if (tipoSaida === 'consensual') {
         textoConclusao = `✅ <strong>FAZER ACORDO É UMA BOA OPÇÃO!</strong><br>Você ganha 32% de multa no FGTS, valor bem melhor do que pedir demissão!`;
     } else if (tipoSaida === 'pedidoComAcordo') {
-        textoConclusao = `✅ <strong>FEZ ACORDO E FOI UMA ÓTIMA ESCOLHA!</strong><br>Você ganha cerca de 25% de multa no FGTS, valor muito maior do que se tivesse saído sem combinar nada!`;
+        textoConclusao = `✅ <strong>FEZ ACORDO E FOI UMA ÓTIMA ESCOLHA!</strong><br>Você ganha 32% de multa no FGTS, valor muito maior do que se tivesse saído sem combinar nada!`;
     } else if (tipoSaida === 'semJustaCausa' || tipoSaida === 'indireta') {
         textoConclusao = `✅ <strong>VOCÊ TEM DIREITO A TUDO!</strong><br>Recebe todos os valores + 40% de multa no FGTS e ainda pode pedir seguro-desemprego. É o melhor tipo de saída!`;
     } else if (tipoSaida === 'pedidoDemissao') {

@@ -40,7 +40,6 @@
                 <p class="resumo">Você mesmo resolve sair da empresa por vontade própria</p>
             </div>
 
-            <!-- ✅ OPÇÃO NOVA ADICIONADA AQUI -->
             <div class="opcao-tipo" onclick="selecionarTipo('pedidoComAcordo')">
                 <h3>🟡🤝 Pedi para sair mas fiz acordo com o patrão</h3>
                 <p class="resumo">Você quis sair, mas combinou valores e condições com o dono da empresa</p>
@@ -156,6 +155,22 @@
                     </div>
                 </div>
 
+                <!-- ✅ NOVA OPÇÃO DE FGTS ADICIONADA AQUI -->
+                <div class="pergunta">
+                    <label>5. Sobre o seu FGTS:</label>
+                    <div class="opcoes">
+                        <label><input type="radio" name="tipoFGTS" value="automatico" checked> 📌 Eu nunca mexi no meu FGTS, calcule com base no tempo que trabalho</label>
+                        <label><input type="radio" name="tipoFGTS" value="exato"> ✅ Eu já mexi ou sei exatamente quanto tem, quero informar o valor</label>
+                    </div>
+                </div>
+
+                <!-- CAMPO PARA VALOR EXATO (SÓ APARECE SE ESCOLHER A OPÇÃO DE BAIXO) -->
+                <div class="pergunta" id="campoFGTSexato" style="display: none; margin-top:10px; padding-left:15px; border-left:2px solid #4cd964;">
+                    <label>Digite o valor exato que tem no seu FGTS:</label>
+                    <input type="text" id="valorFGTSexato" placeholder="Ex: 6175.50">
+                    <small>💡 Informe o valor total que aparece no seu aplicativo ou extrato</small>
+                </div>
+
                 <button type="submit" class="botao-calcular">📊 Calcular Agora</button>
             </form>
         </div>
@@ -177,6 +192,7 @@
 
                 <div class="opcao glass" id="blocoFinal1">
                     <h3>💵 Valor total geral</h3>
+                    <div class="item">Saldo FGTS: <span id="saldoFGTS1">R$ 0,00</span></div>
                     <div class="item">FGTS para sacar: <span id="fgtsTotal1">R$ 0,00</span></div>
                     <div class="item total-final">TOTAL GERAL: <span id="totalGeral1">R$ 0,00</span></div>
                 </div>
@@ -197,6 +213,7 @@
 
                 <div class="opcao glass" id="blocoFinal2">
                     <h3>💵 Valor total geral</h3>
+                    <div class="item">Saldo FGTS: <span id="saldoFGTS2">R$ 0,00</span></div>
                     <div class="item">FGTS para sacar: <span id="fgtsTotal2">R$ 0,00</span></div>
                     <div class="item total-final">TOTAL GERAL: <span id="totalGeral2">R$ 0,00</span></div>
                 </div>

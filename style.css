@@ -42,7 +42,8 @@ header h1 {
     font-size: 0.9rem;
 }
 
-.etapa h2 {
+/* ✅ TODOS OS TÍTULOS PRINCIPAIS AGORA SÃO BRANCOS */
+.etapa h2, .secao h2 {
     color: #ffffff;
     font-size: 1.2rem;
     margin-bottom: 15px;
@@ -125,7 +126,7 @@ header h1 {
 
 .botoes-confirmar {
     display: flex;
-    gap: 10px;
+ gap: 10px;
     justify-content: center;
     flex-wrap: wrap;
 }
@@ -197,7 +198,7 @@ header h1 {
     width: 100%;
     padding: 14px 16px;
     background: rgba(60, 60, 60, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     color: #ffffff;
     font-size: 1rem;
@@ -255,7 +256,7 @@ header h1 {
     transform: translateY(-2px);
 }
 
-/* ✅ TÍTULO BRANCO IGUAL O OUTRO */
+/* ✅ TÍTULOS DOS BLOCOS DE VALORES - TODOS BRANCOS */
 .bloco-valores h3, #blocoFinal1 h3, #blocoFinal2 h3 {
     color: #ffffff;
     font-size: 1rem;

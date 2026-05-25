@@ -255,11 +255,11 @@ header h1 {
     transform: translateY(-2px);
 }
 
-.secao h2 {
+/* ✅ TÍTULO BRANCO IGUAL O OUTRO */
+.bloco-valores h3, #blocoFinal1 h3, #blocoFinal2 h3 {
     color: #ffffff;
-    font-size: 1.1rem;
-    margin-bottom: 15px;
-    text-align: center;
+    font-size: 1rem;
+    margin-bottom: 12px;
     font-weight: 600;
 }
 
@@ -268,13 +268,6 @@ header h1 {
     border-radius: 12px;
     padding: 18px;
     margin-bottom: 15px;
-}
-
-.bloco-valores h3 {
-    color: #ffffff;
-    font-size: 1rem;
-    margin-bottom: 12px;
-    font-weight: 500;
 }
 
 .item {

@@ -40,8 +40,17 @@ function selecionarTipo(tipo) {
         case 'pedidoDemissao':
             texto = `
                 <h3>🟡 Pedido de demissão</h3>
-                <p><strong>O que significa:</strong> É quando você mesmo resolve sair da empresa por vontade própria, sem ser obrigado nem combinado com ninguém.</p>
+                <p><strong>O que significa:</strong> É quando você mesmo resolve sair da empresa por vontade própria, sem ser obrigado nem combinou nada a mais.</p>
                 <p><strong>Seus direitos:</strong> Você recebe saldo de salário, férias + 1/3 e 13º salário proporcional. <strong>NÃO ganha aviso prévio nem multa do FGTS</strong> (só pode sacar o que já foi depositado).</p>
+            `;
+            break;
+
+        // ✅ EXPLICAÇÃO DA NOVA OPÇÃO
+        case 'pedidoComAcordo':
+            texto = `
+                <h3>🟡🤝 Pedi para sair mas fiz acordo com o patrão</h3>
+                <p><strong>O que significa:</strong> Você quis sair por vontade própria, mas conversou com o dono e combinaram valores a mais, ele concordou em pagar parte da multa ou outros benefícios.</p>
+                <p><strong>Seus direitos:</strong> Você recebe saldo, férias e 13º proporcional. <strong>Ganha entre 20% a 32% de multa sobre o FGTS</strong> (depois do que combinou). Não tem direito a seguro-desemprego.</p>
             `;
             break;
 
@@ -49,7 +58,7 @@ function selecionarTipo(tipo) {
             texto = `
                 <h3>🟢 Demissão consensual / Acordo</h3>
                 <p><strong>O que significa:</strong> É quando você e a empresa combinam juntos a sua saída, dá certo para os dois lados.</p>
-                <p><strong>Seus direitos:</strong> Você recebe tudo igual ao pedido de demissão, mas ganha <strong>32% de multa sobre o FGTS</strong> (ao invés de 40% da demissão sem justa causa). Não tem direito a seguro-desemprego.</p>
+                <p><strong>Seus direitos:</strong> Você recebe tudo igual ao pedido de demissão, mas ganha <strong>32% de multa sobre o FGTS</strong>. Não tem direito a seguro-desemprego.</p>
             `;
             break;
 
@@ -83,9 +92,10 @@ function confirmarTipo(sim) {
     }
 }
 
-// ETAPA 4: IDENTIFICAR QUEM NÃO SABE
+// ETAPA 4: IDENTIFICAR QUEM NÃO SABE (ATUALIZADO)
 function identificarTipo() {
     let quemQuis = document.querySelector('input[name="quemQuis"]:checked').value;
+    let fezAcordo = document.querySelector('input[name="fezAcordo"]:checked').value;
     let motivoErro = document.querySelector('input[name="motivoErro"]:checked').value;
     let motivoEmpresa = document.querySelector('input[name="motivoEmpresa"]:checked').value;
 
@@ -97,14 +107,14 @@ function identificarTipo() {
             tipoEncontrado = 'comJustaCausa';
             resultado = `
                 <h3>⚫ Demissão com justa causa</h3>
-                <p>Com base nas suas respostas, você foi mandado embora porque errou ou quebrou regras graves da empresa.</p>
+                <p>Com base em suas informações fornecidas este é o seu tipo de demissão</p>
                 <p><strong>Seus direitos:</strong> Saldo de salário + férias vencidas. Não recebe mais nada.</p>
             `;
         } else {
             tipoEncontrado = 'semJustaCausa';
             resultado = `
                 <h3>🔴 Demissão sem justa causa</h3>
-                <p>Com base nas suas respostas, você foi mandado embora sem ter feito nada de errado.</p>
+                <p>Com base em suas informações fornecidas este é o seu tipo de demissão</p>
                 <p><strong>Seus direitos:</strong> Recebe tudo completo + 40% de multa no FGTS + seguro-desemprego.</p>
             `;
         }
@@ -115,16 +125,25 @@ function identificarTipo() {
             tipoEncontrado = 'indireta';
             resultado = `
                 <h3>🟠 Rescisão indireta</h3>
-                <p>Com base nas suas respostas, você saiu porque a empresa não cumpriu com o combinado (não pagou, maltratou, etc).</p>
+                <p>Com base em suas informações fornecidas este é o seu tipo de demissão</p>
                 <p><strong>Seus direitos:</strong> É igual a demissão sem justa causa, recebe tudo completo.</p>
             `;
         } else {
-            tipoEncontrado = 'pedidoDemissao';
-            resultado = `
-                <h3>🟡 Pedido de demissão</h3>
-                <p>Com base nas suas respostas, você saiu por vontade própria mesmo, sem problemas com a empresa.</p>
-                <p><strong>Seus direitos:</strong> Recebe saldo, férias e 13º proporcional. Sem multa no FGTS.</p>
-            `;
+            if (fezAcordo === 'sim') {
+                tipoEncontrado = 'pedidoComAcordo';
+                resultado = `
+                    <h3>🟡🤝 Pedi para sair mas fiz acordo com o patrão</h3>
+                    <p>Com base em suas informações fornecidas este é o seu tipo de demissão</p>
+                    <p><strong>Seus direitos:</strong> Recebe saldo, férias e 13º + até 32% de multa no FGTS conforme combinado.</p>
+                `;
+            } else {
+                tipoEncontrado = 'pedidoDemissao';
+                resultado = `
+                    <h3>🟡 Pedido de demissão</h3>
+                    <p>Com base em suas informações fornecidas este é o seu tipo de demissão</p>
+                    <p><strong>Seus direitos:</strong> Recebe saldo, férias e 13º proporcional. Sem multa no FGTS.</p>
+                `;
+            }
         }
     }
 
@@ -132,7 +151,7 @@ function identificarTipo() {
         tipoEncontrado = 'consensual';
         resultado = `
             <h3>🟢 Demissão consensual / Acordo</h3>
-            <p>Com base nas suas respostas, a saída foi combinada entre você e a empresa.</p>
+            <p>Com base em suas informações fornecidas este é o seu tipo de demissão</p>
             <p><strong>Seus direitos:</strong> Recebe tudo + 32% de multa no FGTS.</p>
         `;
     }
@@ -208,6 +227,7 @@ document.getElementById('formulario').addEventListener('submit', function(e) {
         let valorAviso = 0;
         let percentualMulta = 0;
 
+        // ✅ CÁLCULO DA NOVA OPÇÃO
         switch(tipoSaida) {
             case 'semJustaCausa':
                 valorAviso = salarioBruto;
@@ -216,6 +236,10 @@ document.getElementById('formulario').addEventListener('submit', function(e) {
             case 'consensual':
                 valorAviso = salarioBruto / 2;
                 percentualMulta = 0.32;
+                break;
+            case 'pedidoComAcordo': // NOVA OPÇÃO
+                valorAviso = 0;
+                percentualMulta = 0.25; // média do que geralmente combinam
                 break;
             case 'indireta':
                 valorAviso = salarioBruto;
@@ -284,10 +308,12 @@ document.getElementById('formulario').addEventListener('submit', function(e) {
     document.getElementById('fgtsTotal2').textContent = formatarMoeda(resultadoComFerias.totalFGTS);
     document.getElementById('totalGeral2').textContent = formatarMoeda(resultadoComFerias.totalGeral);
 
-    // CONCLUSÃO
+    // CONCLUSÃO ATUALIZADA
     let textoConclusao = '';
     if (tipoSaida === 'consensual') {
-        textoConclusao = `✅ <strong>FAZER ACORDO É UMA BOA OPÇÃO!</strong><br>Você ganha 32% de multa no FGTS, valor bem melhor do que pedir demissão e quase igual a ser demitido sem justa causa!`;
+        textoConclusao = `✅ <strong>FAZER ACORDO É UMA BOA OPÇÃO!</strong><br>Você ganha 32% de multa no FGTS, valor bem melhor do que pedir demissão!`;
+    } else if (tipoSaida === 'pedidoComAcordo') {
+        textoConclusao = `✅ <strong>FEZ ACORDO E FOI UMA ÓTIMA ESCOLHA!</strong><br>Você ganha cerca de 25% de multa no FGTS, valor muito maior do que se tivesse saído sem combinar nada!`;
     } else if (tipoSaida === 'semJustaCausa' || tipoSaida === 'indireta') {
         textoConclusao = `✅ <strong>VOCÊ TEM DIREITO A TUDO!</strong><br>Recebe todos os valores + 40% de multa no FGTS e ainda pode pedir seguro-desemprego. É o melhor tipo de saída!`;
     } else if (tipoSaida === 'pedidoDemissao') {

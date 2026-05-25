@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Contas - Pedido de Demissão ou Acordo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💸 Quanto vou receber ao sair da empresa?</h1>
+            <p class="descricao">Responda as perguntas abaixo e veja o valor para sair por conta própria OU fazendo acordo com o patrão!</p>
+        </header>
+
+        <form id="formulario">
+            <!-- Pergunta 1: Quando começou a trabalhar? -->
+            <div class="pergunta">
+                <label>1. Em qual dia, mês e ano você começou a trabalhar na empresa?</label>
+                <input type="date" id="admissao" required>
+            </div>
+
+            <!-- Pergunta 2: Qual o salário bruto? -->
+            <div class="pergunta">
+                <label>2. Qual o valor do seu salário mensal (valor que está na carteira)?</label>
+                <input type="number" id="salarioBruto" step="0.01" placeholder="Ex: 1907.43" required>
+            </div>
+
+            <!-- Pergunta 3: Tem férias atrasadas? -->
+            <div class="pergunta">
+                <label>3. Você tem férias que já poderia ter tirado e ainda não tirou?</label>
+                <div class="opcoes">
+                    <label><input type="radio" name="feriasVencidas" value="nao" checked> Não</label>
+                    <label><input type="radio" name="feriasVencidas" value="sim"> Sim, 1 ano completo</label>
+                </div>
+            </div>
+
+            <!-- Pergunta 4: Vai cumprir aviso prévio? -->
+            <div class="pergunta">
+                <label>4. Quando sair, você vai trabalhar os 30 dias ou sair antes?</label>
+                <div class="opcoes">
+                    <label><input type="radio" name="aviso" value="cumprir" checked> Vou trabalhar os 30 dias</label>
+                    <label><input type="radio" name="aviso" value="sairAntes"> Vou sair antes</label>
+                </div>
+            </div>
+
+            <button type="submit" class="botao-calcular">📊 Calcular Agora</button>
+        </form>
+
+        <!-- Resultado -->
+        <div id="resultado" class="resultado" style="display: none;">
+            <h2>✅ Resultado dos cálculos</h2>
+
+            <!-- VALORES IGUAIS NOS DOIS CASOS -->
+            <div class="secao">
+                <h3>💰 Valor que cai na sua conta (EM QUALQUER CASO):</h3>
+                <div class="item">
+                    <span>Saldo de salário:</span>
+                    <span id="saldoSalario">R$ 0,00</span>
+                </div>
+                <div class="item">
+                    <span>Férias + 1/3 constitucional:</span>
+                    <span id="valorFerias">R$ 0,00</span>
+                </div>
+                <div class="item">
+                    <span>13º salário proporcional:</span>
+                    <span id="valor13">R$ 0,00</span>
+                </div>
+                <div class="item total-liquido">
+                    <strong>Total a receber da empresa:</strong>
+                    <strong id="totalLiquido">R$ 0,00</strong>
+                </div>
+                <p class="obs">* Esse valor é o mesmo tanto se você pedir demissão quanto se fizer acordo</p>
+            </div>
+
+
+            <!-- OPÇÃO 1: PEDIR DEMISSÃO -->
+            <div class="secao opcao1">
+                <h3>🔴 OPÇÃO 1: Pedir demissão por conta própria</h3>
+                <p class="explicacao">Você recebe tudo que tem direito, mas NÃO ganha multa sobre o FGTS</p>
+
+                <div class="item">
+                    <span>Saldo do FGTS (só o que já foi depositado):</span>
+                    <span id="fgtsDemissao">R$ 0,00</span>
+                </div>
+
+                <div class="item total-final">
+                    <strong>TOTAL GERAL (empresa + FGTS):</strong>
+                    <strong id="totalDemissao">R$ 0,00</strong>
+                </div>
+            </div>
+
+
+            <!-- OPÇÃO 2: FAZER ACORDO -->
+            <div class="secao opcao2">
+                <h3>🟢 OPÇÃO 2: Fazer acordo com o patrão</h3>
+                <p class="explicacao">Você ganha 32% a mais sobre o saldo do FGTS (perde só 8% do valor cheio, como o patrão explicou)</p>
+
+                <div class="item">
+                    <span>Saldo do FGTS + 32% de multa:</span>
+                    <span id="fgtsAcordo">R$ 0,00</span>
+                </div>
+                <div class="item ganho-extra">
+                    <span>✅ Valor que você ganha a mais:</span>
+                    <span id="ganhoExtra">R$ 0,00</span>
+                </div>
+
+                <div class="item total-final">
+                    <strong>TOTAL GERAL (empresa + FGTS com multa):</strong>
+                    <strong id="totalAcordo">R$ 0,00</strong>
+                </div>
+            </div>
+
+
+            <div class="aviso">
+                <p>💡 <strong>Explicação simples:</strong><br>
+                - Multa cheia é 40% (só ganha se for demitido sem motivo)<br>
+                - No acordo você ganha 32% (perdeu 20% da multa, mas ganha muito mais do que pedindo demissão)<br>
+                - Pedindo demissão você ganha 0% de multa</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

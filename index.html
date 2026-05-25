@@ -13,10 +13,10 @@
             <p class="descricao">Descubra quanto você tem direito a receber ao sair da empresa</p>
         </header>
 
-        <!-- ETAPA 1: NOME (CAIXA MAIOR) -->
+        <!-- ETAPA 1: NOME (ACEITA SOMENTE LETRAS) -->
         <div id="etapaNome" class="etapa glass">
             <h2>👋 Olá! Digite seu nome:</h2>
-            <input type="text" id="nomeUsuario" placeholder="Digite seu nome completo aqui..." required>
+            <input type="text" id="nomeUsuario" placeholder="Digite seu nome completo aqui..." required onkeypress="return somenteLetras(event)" onpaste="return validarColagemNome(event)">
             <button class="botao-proximo" onclick="proximaEtapa()">Próximo ➜</button>
         </div>
 
@@ -155,7 +155,7 @@
                     </div>
                 </div>
 
-                <!-- ✅ NOVA OPÇÃO DE FGTS ADICIONADA AQUI -->
+                <!-- NOVA OPÇÃO DE FGTS -->
                 <div class="pergunta">
                     <label>5. Sobre o seu FGTS:</label>
                     <div class="opcoes">
@@ -164,7 +164,7 @@
                     </div>
                 </div>
 
-                <!-- CAMPO PARA VALOR EXATO (SÓ APARECE SE ESCOLHER A OPÇÃO DE BAIXO) -->
+                <!-- CAMPO PARA VALOR EXATO -->
                 <div class="pergunta" id="campoFGTSexato" style="display: none; margin-top:10px; padding-left:15px; border-left:2px solid #4cd964;">
                     <label>Digite o valor exato que tem no seu FGTS:</label>
                     <input type="text" id="valorFGTSexato" placeholder="Ex: 6175.50">
@@ -220,7 +220,7 @@
             </div>
 
             <div class="conclusao glass">
-                <h2>🗨️ CONCLUSÃO: O que é melhor pra você?</h2>
+                <h2>✅ CONCLUSÃO: O que é melhor pra você?</h2>
                 <p id="textoConclusao"></p>
             </div>
 

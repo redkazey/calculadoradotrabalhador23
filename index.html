@@ -3,44 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Contas - Pedido de Demissão ou Acordo</title>
+    <title>Calculadora de Contas - Saída da Empresa</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>💸 Quanto vou receber ao sair da empresa?</h1>
-            <p class="descricao">Responda as perguntas abaixo e veja o valor para sair por conta própria OU fazendo acordo com o patrão!</p>
+        <header class="glass">
+            <h1>💸 Quanto vou receber ao sair?</h1>
+            <p class="descricao">Responda e veja qual opção é melhor pra você!</p>
         </header>
 
-        <form id="formulario">
-            <!-- Pergunta 1: Quando começou a trabalhar? -->
+        <form id="formulario" class="glass">
+            <!-- Pergunta 1 -->
             <div class="pergunta">
-                <label>1. Em qual dia, mês e ano você começou a trabalhar na empresa?</label>
+                <label>1. Quando você começou a trabalhar?</label>
                 <input type="date" id="admissao" required>
             </div>
 
-            <!-- Pergunta 2: Qual o salário bruto? -->
+            <!-- Pergunta 2 -->
             <div class="pergunta">
-                <label>2. Qual o valor do seu salário mensal (valor que está na carteira)?</label>
-                <input type="number" id="salarioBruto" step="0.01" placeholder="Ex: 1907.43" required>
+                <label>2. Qual o valor do seu salário mensal? <small>(ex: 1907.43)</small></label>
+                <input type="text" id="salarioBruto" placeholder="Digite apenas números" required>
             </div>
 
-            <!-- Pergunta 3: Tem férias atrasadas? -->
+            <!-- Pergunta 3 -->
             <div class="pergunta">
-                <label>3. Você tem férias que já poderia ter tirado e ainda não tirou?</label>
+                <label>3. Você tem férias que não tirou ainda?</label>
                 <div class="opcoes">
-                    <label><input type="radio" name="feriasVencidas" value="nao" checked> Não</label>
-                    <label><input type="radio" name="feriasVencidas" value="sim"> Sim, 1 ano completo</label>
+                    <label><input type="radio" name="ferias" value="nao" checked> Não</label>
+                    <label><input type="radio" name="ferias" value="sim"> Sim, 1 ano completo</label>
+                    <label><input type="radio" name="ferias" value="naosei"> Não sei</label>
                 </div>
             </div>
 
-            <!-- Pergunta 4: Vai cumprir aviso prévio? -->
+            <!-- Pergunta 4 -->
             <div class="pergunta">
-                <label>4. Quando sair, você vai trabalhar os 30 dias ou sair antes?</label>
+                <label>4. Vai trabalhar os 30 dias de aviso?</label>
                 <div class="opcoes">
-                    <label><input type="radio" name="aviso" value="cumprir" checked> Vou trabalhar os 30 dias</label>
-                    <label><input type="radio" name="aviso" value="sairAntes"> Vou sair antes</label>
+                    <label><input type="radio" name="aviso" value="cumprir" checked> Sim</label>
+                    <label><input type="radio" name="aviso" value="sairAntes"> Não, vou sair antes</label>
                 </div>
             </div>
 
@@ -48,75 +49,76 @@
         </form>
 
         <!-- Resultado -->
-        <div id="resultado" class="resultado" style="display: none;">
-            <h2>✅ Resultado dos cálculos</h2>
+        <div id="resultado" style="display: none;">
 
-            <!-- VALORES IGUAIS NOS DOIS CASOS -->
-            <div class="secao">
-                <h3>💰 Valor que cai na sua conta (EM QUALQUER CASO):</h3>
-                <div class="item">
-                    <span>Saldo de salário:</span>
-                    <span id="saldoSalario">R$ 0,00</span>
-                </div>
-                <div class="item">
-                    <span>Férias + 1/3 constitucional:</span>
-                    <span id="valorFerias">R$ 0,00</span>
-                </div>
-                <div class="item">
-                    <span>13º salário proporcional:</span>
-                    <span id="valor13">R$ 0,00</span>
-                </div>
-                <div class="item total-liquido">
-                    <strong>Total a receber da empresa:</strong>
-                    <strong id="totalLiquido">R$ 0,00</strong>
-                </div>
-                <p class="obs">* Esse valor é o mesmo tanto se você pedir demissão quanto se fizer acordo</p>
-            </div>
+            <!-- Caso 1: Férias tiradas OU opção não sei -->
+            <div id="casoSemFerias" class="secao glass">
+                <h2>✅ Resultado com férias já tiradas</h2>
 
-
-            <!-- OPÇÃO 1: PEDIR DEMISSÃO -->
-            <div class="secao opcao1">
-                <h3>🔴 OPÇÃO 1: Pedir demissão por conta própria</h3>
-                <p class="explicacao">Você recebe tudo que tem direito, mas NÃO ganha multa sobre o FGTS</p>
-
-                <div class="item">
-                    <span>Saldo do FGTS (só o que já foi depositado):</span>
-                    <span id="fgtsDemissao">R$ 0,00</span>
+                <div class="bloco-valores">
+                    <h3>💰 Valor da empresa (igual nos dois casos):</h3>
+                    <div class="item">Saldo de salário: <span id="saldoSalario1">R$ 0,00</span></div>
+                    <div class="item">Férias + 1/3: <span id="valorFerias1">R$ 0,00</span></div>
+                    <div class="item">13º proporcional: <span id="valor13_1">R$ 0,00</span></div>
+                    <div class="item total">TOTAL: <span id="totalEmpresa1">R$ 0,00</span></div>
                 </div>
 
-                <div class="item total-final">
-                    <strong>TOTAL GERAL (empresa + FGTS):</strong>
-                    <strong id="totalDemissao">R$ 0,00</strong>
+                <div class="opcao vermelha glass">
+                    <h3>🔴 Pedir demissão</h3>
+                    <p>Sem multa no FGTS</p>
+                    <div class="item">FGTS: <span id="fgtsDemissao1">R$ 0,00</span></div>
+                    <div class="item total-final">TOTAL GERAL: <span id="totalDemissao1">R$ 0,00</span></div>
+                </div>
+
+                <div class="opcao verde glass">
+                    <h3>🟢 Fazer acordo</h3>
+                    <p>+32% de multa no FGTS (perde só 20% da multa cheia)</p>
+                    <div class="item">FGTS + multa: <span id="fgtsAcordo1">R$ 0,00</span></div>
+                    <div class="item ganho">GANHA A MAIS: <span id="ganhoExtra1">R$ 0,00</span></div>
+                    <div class="item total-final">TOTAL GERAL: <span id="totalAcordo1">R$ 0,00</span></div>
                 </div>
             </div>
 
+            <!-- Caso 2: Férias NÃO tiradas OU opção não sei -->
+            <div id="casoComFerias" class="secao glass">
+                <h2>⚠️ Resultado com férias NÃO tiradas</h2>
 
-            <!-- OPÇÃO 2: FAZER ACORDO -->
-            <div class="secao opcao2">
-                <h3>🟢 OPÇÃO 2: Fazer acordo com o patrão</h3>
-                <p class="explicacao">Você ganha 32% a mais sobre o saldo do FGTS (perde só 8% do valor cheio, como o patrão explicou)</p>
-
-                <div class="item">
-                    <span>Saldo do FGTS + 32% de multa:</span>
-                    <span id="fgtsAcordo">R$ 0,00</span>
-                </div>
-                <div class="item ganho-extra">
-                    <span>✅ Valor que você ganha a mais:</span>
-                    <span id="ganhoExtra">R$ 0,00</span>
+                <div class="bloco-valores">
+                    <h3>💰 Valor da empresa (igual nos dois casos):</h3>
+                    <div class="item">Saldo de salário: <span id="saldoSalario2">R$ 0,00</span></div>
+                    <div class="item">Férias + 1/3: <span id="valorFerias2">R$ 0,00</span></div>
+                    <div class="item">13º proporcional: <span id="valor13_2">R$ 0,00</span></div>
+                    <div class="item total">TOTAL: <span id="totalEmpresa2">R$ 0,00</span></div>
                 </div>
 
-                <div class="item total-final">
-                    <strong>TOTAL GERAL (empresa + FGTS com multa):</strong>
-                    <strong id="totalAcordo">R$ 0,00</strong>
+                <div class="opcao vermelha glass">
+                    <h3>🔴 Pedir demissão</h3>
+                    <p>Sem multa no FGTS</p>
+                    <div class="item">FGTS: <span id="fgtsDemissao2">R$ 0,00</span></div>
+                    <div class="item total-final">TOTAL GERAL: <span id="totalDemissao2">R$ 0,00</span></div>
+                </div>
+
+                <div class="opcao verde glass">
+                    <h3>🟢 Fazer acordo</h3>
+                    <p>+32% de multa no FGTS (perde só 20% da multa cheia)</p>
+                    <div class="item">FGTS + multa: <span id="fgtsAcordo2">R$ 0,00</span></div>
+                    <div class="item ganho">GANHA A MAIS: <span id="ganhoExtra2">R$ 0,00</span></div>
+                    <div class="item total-final">TOTAL GERAL: <span id="totalAcordo2">R$ 0,00</span></div>
                 </div>
             </div>
 
+            <!-- Conclusão -->
+            <div class="conclusao glass">
+                <h2>✅ CONCLUSÃO: O que é melhor pra você?</h2>
+                <p id="textoConclusao"></p>
+            </div>
 
-            <div class="aviso">
+            <!-- Explicação -->
+            <div class="aviso glass">
                 <p>💡 <strong>Explicação simples:</strong><br>
-                - Multa cheia é 40% (só ganha se for demitido sem motivo)<br>
-                - No acordo você ganha 32% (perdeu 20% da multa, mas ganha muito mais do que pedindo demissão)<br>
-                - Pedindo demissão você ganha 0% de multa</p>
+                • Multa cheia = 40% (só ganha se for demitido sem motivo)<br>
+                • Acordo = 32% (perdeu 20% da multa, mas ganha muito mais do que pedindo demissão)<br>
+                • Pedir demissão = 0% de multa</p>
             </div>
         </div>
     </div>
@@ -124,3 +126,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+

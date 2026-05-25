@@ -9,116 +9,196 @@
 <body>
     <div class="container">
         <header class="glass">
-            <h1>💸 Quanto vou receber ao sair?</h1>
-            <p class="descricao">Responda e veja qual opção é melhor pra você!</p>
+            <h1>💸 Calculadora de Verbas Rescisórias</h1>
+            <p class="descricao">Descubra quanto você tem direito a receber ao sair da empresa</p>
         </header>
 
-        <form id="formulario" class="glass">
-            <!-- Pergunta 1 -->
-            <div class="pergunta">
-                <label>1. Quando você começou a trabalhar?</label>
-                <input type="date" id="admissao" required>
+        <!-- ETAPA 1: NOME -->
+        <div id="etapaNome" class="etapa glass">
+            <h2>👋 Olá! Digite seu nome:</h2>
+            <input type="text" id="nomeUsuario" placeholder="Seu nome completo" required>
+            <button class="botao-proximo" onclick="proximaEtapa()">Próximo ➜</button>
+        </div>
+
+        <!-- ETAPA 2: ESCOLHER TIPO DE SAÍDA -->
+        <div id="etapaTipo" class="etapa glass" style="display: none;">
+            <h2 id="textoSaudacao"></h2>
+            <p class="pergunta-principal">O que vamos calcular hoje?</p>
+
+            <div class="opcao-tipo" onclick="selecionarTipo('semJustaCausa')">
+                <h3>🔴 Demissão sem justa causa</h3>
+                <p class="resumo">Você é mandado embora sem ter feito nada de errado</p>
             </div>
 
-            <!-- Pergunta 2 -->
-            <div class="pergunta">
-                <label>2. Qual o valor do seu salário mensal? <small>(ex: 1907.43)</small></label>
-                <input type="text" id="salarioBruto" placeholder="Digite apenas números" required>
+            <div class="opcao-tipo" onclick="selecionarTipo('comJustaCausa')">
+                <h3>⚫ Demissão com justa causa</h3>
+                <p class="resumo">Você foi mandado embora por motivo grave (falta, roubo, etc)</p>
             </div>
 
-            <!-- Pergunta 3 -->
+            <div class="opcao-tipo" onclick="selecionarTipo('pedidoDemissao')">
+                <h3>🟡 Pedido de demissão</h3>
+                <p class="resumo">Você mesmo resolve sair da empresa por vontade própria</p>
+            </div>
+
+            <div class="opcao-tipo" onclick="selecionarTipo('consensual')">
+                <h3>🟢 Demissão consensual / Acordo</h3>
+                <p class="resumo">Você e a empresa combinam juntos a saída</p>
+            </div>
+
+            <div class="opcao-tipo" onclick="selecionarTipo('indireta')">
+                <h3>🟠 Rescisão indireta</h3>
+                <p class="resumo">Você sai porque a empresa não cumpriu com suas obrigações</p>
+            </div>
+
+            <div class="opcao-tipo nao-sei" onclick="selecionarTipo('naoSei')">
+                <h3>❌ Não sei qual é o meu caso</h3>
+                <p class="resumo">Me ajude a descobrir respondendo algumas perguntas</p>
+            </div>
+        </div>
+
+        <!-- ETAPA 3: EXPLICAÇÃO E CONFIRMAÇÃO -->
+        <div id="etapaConfirmacao" class="etapa glass" style="display: none;">
+            <h2>📌 Entenda o seu caso</h2>
+            <div id="textoExplicacao" class="explicacao"></div>
+            
+            <p class="pergunta-confirmar">É esse o seu tipo de saída?</p>
+            <div class="botoes-confirmar">
+                <button class="botao-sim" onclick="confirmarTipo(true)">✅ Sim, é esse mesmo</button>
+                <button class="botao-nao" onclick="confirmarTipo(false)">❌ Não, não é esse</button>
+            </div>
+        </div>
+
+        <!-- ETAPA 4: PERGUNTAS PARA QUEM NÃO SABE -->
+        <div id="etapaPerguntas" class="etapa glass" style="display: none;">
+            <h2>🔍 Vamos descobrir o seu caso</h2>
+            <p>Responda com sinceridade para eu te ajudar:</p>
+
             <div class="pergunta">
-                <label>3. Você tem férias que não tirou ainda?</label>
+                <label>1. Quem quis que você saísse da empresa?</label>
                 <div class="opcoes">
-                    <label><input type="radio" name="ferias" value="nao" checked> Não</label>
-                    <label><input type="radio" name="ferias" value="sim"> Sim, 1 ano completo</label>
-                    <label><input type="radio" name="ferias" value="naosei"> Não sei</label>
+                    <label><input type="radio" name="quemQuis" value="empresa"> A empresa me mandou embora</label>
+                    <label><input type="radio" name="quemQuis" value="eu"> Eu mesmo quis sair</label>
+                    <label><input type="radio" name="quemQuis" value="ambos"> Nós dois combinamos juntos</label>
                 </div>
             </div>
 
-            <!-- Pergunta 4 -->
             <div class="pergunta">
-                <label>4. Vai trabalhar os 30 dias de aviso?</label>
+                <label>2. Se a empresa mandou você embora, foi por que você fez algo errado ou quebrou alguma regra grave?</label>
                 <div class="opcoes">
-                    <label><input type="radio" name="aviso" value="cumprir" checked> Sim</label>
-                    <label><input type="radio" name="aviso" value="sairAntes"> Não, vou sair antes</label>
+                    <label><input type="radio" name="motivoErro" value="sim"> Sim, eu errei ou quebrei regras</label>
+                    <label><input type="radio" name="motivoErro" value="nao"> Não, não fiz nada de errado</label>
+                    <label><input type="radio" name="motivoErro" value="naoAplica"> Não se aplica</label>
                 </div>
             </div>
 
-            <button type="submit" class="botao-calcular">📊 Calcular Agora</button>
-        </form>
+            <div class="pergunta">
+                <label>3. Se você quis sair, foi porque a empresa estava errada com você? (não pagou salário, mandou fazer coisa errada, etc)</label>
+                <div class="opcoes">
+                    <label><input type="radio" name="motivoEmpresa" value="sim"> Sim, a empresa não cumpriu com o combinado</label>
+                    <label><input type="radio" name="motivoEmpresa" value="nao"> Não, foi por vontade minha mesmo</label>
+                    <label><input type="radio" name="motivoEmpresa" value="naoAplica"> Não se aplica</label>
+                </div>
+            </div>
 
-        <!-- Resultado -->
+            <button class="botao-proximo" onclick="identificarTipo()">Descobrir meu caso ➜</button>
+        </div>
+
+        <!-- ETAPA 5: RESULTADO DA IDENTIFICAÇÃO -->
+        <div id="etapaResultadoTipo" class="etapa glass" style="display: none;">
+            <h2>📋 Seu tipo de saída é:</h2>
+            <div id="resultadoIdentificacao" class="resultado-tipo"></div>
+            <button class="botao-proximo" onclick="irParaDados()">Continuar para os cálculos ➜</button>
+        </div>
+
+        <!-- ETAPA 6: DADOS PARA CÁLCULO -->
+        <div id="etapaDados" class="etapa glass" style="display: none;">
+            <h2>📊 Agora preciso de alguns dados</h2>
+            <form id="formulario">
+                <div class="pergunta">
+                    <label>1. Quando você começou a trabalhar?</label>
+                    <input type="date" id="admissao" required>
+                </div>
+
+                <div class="pergunta">
+                    <label>2. Qual o valor do seu salário mensal? <small>(digite apenas números)</small></label>
+                    <input type="text" id="salarioBruto" placeholder="Ex: 1907.43" required>
+                </div>
+
+                <div class="pergunta">
+                    <label>3. Você tem férias que não tirou ainda?</label>
+                    <div class="opcoes">
+                        <label><input type="radio" name="ferias" value="nao" checked> Não</label>
+                        <label><input type="radio" name="ferias" value="sim"> Sim, 1 ano completo</label>
+                        <label><input type="radio" name="ferias" value="naosei"> Não sei</label>
+                    </div>
+                </div>
+
+                <div class="pergunta">
+                    <label>4. Vai cumprir os 30 dias de aviso prévio?</label>
+                    <div class="opcoes">
+                        <label><input type="radio" name="aviso" value="cumprir" checked> Sim</label>
+                        <label><input type="radio" name="aviso" value="sairAntes"> Não, vou sair antes</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="botao-calcular">📊 Calcular Agora</button>
+            </form>
+        </div>
+
+        <!-- ETAPA 7: RESULTADOS FINAIS -->
         <div id="resultado" style="display: none;">
-
-            <!-- Caso 1: Férias tiradas OU opção não sei -->
+            <!-- Os blocos de resultado continuam os mesmos que já tínhamos -->
             <div id="casoSemFerias" class="secao glass">
                 <h2>✅ Resultado com férias já tiradas</h2>
 
                 <div class="bloco-valores">
-                    <h3>💰 Valor da empresa (igual nos dois casos):</h3>
+                    <h3>💰 Valor que você vai receber:</h3>
                     <div class="item">Saldo de salário: <span id="saldoSalario1">R$ 0,00</span></div>
                     <div class="item">Férias + 1/3: <span id="valorFerias1">R$ 0,00</span></div>
                     <div class="item">13º proporcional: <span id="valor13_1">R$ 0,00</span></div>
+                    <div class="item" id="aviso1">Aviso prévio: <span id="valorAviso1">R$ 0,00</span></div>
+                    <div class="item" id="multa1">Multa FGTS: <span id="valorMulta1">R$ 0,00</span></div>
                     <div class="item total">TOTAL: <span id="totalEmpresa1">R$ 0,00</span></div>
                 </div>
 
-                <div class="opcao vermelha glass">
-                    <h3>🔴 Pedir demissão</h3>
-                    <p>Sem multa no FGTS</p>
-                    <div class="item">FGTS: <span id="fgtsDemissao1">R$ 0,00</span></div>
-                    <div class="item total-final">TOTAL GERAL: <span id="totalDemissao1">R$ 0,00</span></div>
-                </div>
-
-                <div class="opcao verde glass">
-                    <h3>🟢 Fazer acordo</h3>
-                    <p>+32% de multa no FGTS (perde só 20% da multa cheia)</p>
-                    <div class="item">FGTS + multa: <span id="fgtsAcordo1">R$ 0,00</span></div>
-                    <div class="item ganho">GANHA A MAIS: <span id="ganhoExtra1">R$ 0,00</span></div>
-                    <div class="item total-final">TOTAL GERAL: <span id="totalAcordo1">R$ 0,00</span></div>
+                <div class="opcao glass" id="blocoFinal1">
+                    <h3>💵 Valor total geral</h3>
+                    <div class="item">FGTS para sacar: <span id="fgtsTotal1">R$ 0,00</span></div>
+                    <div class="item total-final">TOTAL GERAL: <span id="totalGeral1">R$ 0,00</span></div>
                 </div>
             </div>
 
-            <!-- Caso 2: Férias NÃO tiradas OU opção não sei -->
             <div id="casoComFerias" class="secao glass">
                 <h2>⚠️ Resultado com férias NÃO tiradas</h2>
 
                 <div class="bloco-valores">
-                    <h3>💰 Valor da empresa (igual nos dois casos):</h3>
+                    <h3>💰 Valor que você vai receber:</h3>
                     <div class="item">Saldo de salário: <span id="saldoSalario2">R$ 0,00</span></div>
                     <div class="item">Férias + 1/3: <span id="valorFerias2">R$ 0,00</span></div>
                     <div class="item">13º proporcional: <span id="valor13_2">R$ 0,00</span></div>
+                    <div class="item" id="aviso2">Aviso prévio: <span id="valorAviso2">R$ 0,00</span></div>
+                    <div class="item" id="multa2">Multa FGTS: <span id="valorMulta2">R$ 0,00</span></div>
                     <div class="item total">TOTAL: <span id="totalEmpresa2">R$ 0,00</span></div>
                 </div>
 
-                <div class="opcao vermelha glass">
-                    <h3>🔴 Pedir demissão</h3>
-                    <p>Sem multa no FGTS</p>
-                    <div class="item">FGTS: <span id="fgtsDemissao2">R$ 0,00</span></div>
-                    <div class="item total-final">TOTAL GERAL: <span id="totalDemissao2">R$ 0,00</span></div>
-                </div>
-
-                <div class="opcao verde glass">
-                    <h3>🟢 Fazer acordo</h3>
-                    <p>+32% de multa no FGTS (perde só 20% da multa cheia)</p>
-                    <div class="item">FGTS + multa: <span id="fgtsAcordo2">R$ 0,00</span></div>
-                    <div class="item ganho">GANHA A MAIS: <span id="ganhoExtra2">R$ 0,00</span></div>
-                    <div class="item total-final">TOTAL GERAL: <span id="totalAcordo2">R$ 0,00</span></div>
+                <div class="opcao glass" id="blocoFinal2">
+                    <h3>💵 Valor total geral</h3>
+                    <div class="item">FGTS para sacar: <span id="fgtsTotal2">R$ 0,00</span></div>
+                    <div class="item total-final">TOTAL GERAL: <span id="totalGeral2">R$ 0,00</span></div>
                 </div>
             </div>
 
-            <!-- Conclusão -->
             <div class="conclusao glass">
                 <h2>✅ CONCLUSÃO: O que é melhor pra você?</h2>
                 <p id="textoConclusao"></p>
             </div>
 
-            <!-- Explicação -->
             <div class="aviso glass">
                 <p>💡 <strong>Explicação simples:</strong><br>
                 • Multa cheia = 40% (só ganha se for demitido sem motivo)<br>
-                • Acordo = 32% (perdeu 20% da multa, mas ganha muito mais do que pedindo demissão)<br>
-                • Pedir demissão = 0% de multa</p>
+                • Acordo = 32% de multa<br>
+                • Pedir demissão = 0% de multa<br>
+                • Justa causa = perde quase todos os direitos</p>
             </div>
         </div>
     </div>

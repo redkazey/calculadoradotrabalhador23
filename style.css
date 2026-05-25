@@ -50,7 +50,6 @@ header h1 {
     font-weight: 600;
 }
 
-/* ✅ CAIXA DO NOME MAIOR E MELHORADA */
 #nomeUsuario {
     width: 100%;
     padding: 18px 20px;
@@ -74,7 +73,6 @@ header h1 {
     font-size: 1rem;
 }
 
-/* OPÇÕES DE TIPO DE SAÍDA */
 .opcao-tipo {
     background: rgba(255,255,255,0.1);
     border: 1px solid rgba(255,255,255,0.2);
@@ -177,7 +175,6 @@ header h1 {
     line-height: 1.8;
 }
 
-/* FORMULÁRIO E CÁLCULOS */
 .pergunta {
     margin-bottom: 20px;
 }
@@ -347,4 +344,3 @@ header h1 {
         padding: 16px 18px;
     }
 }
-

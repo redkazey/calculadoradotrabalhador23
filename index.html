@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Contas - Saída da Empresa</title>
+    <title>Calculadora de Verbas Rescisórias</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,10 +13,10 @@
             <p class="descricao">Descubra quanto você tem direito a receber ao sair da empresa</p>
         </header>
 
-        <!-- ETAPA 1: NOME -->
+        <!-- ETAPA 1: NOME (CAIXA MAIOR) -->
         <div id="etapaNome" class="etapa glass">
             <h2>👋 Olá! Digite seu nome:</h2>
-            <input type="text" id="nomeUsuario" placeholder="Seu nome completo" required>
+            <input type="text" id="nomeUsuario" placeholder="Digite seu nome completo aqui..." required>
             <button class="botao-proximo" onclick="proximaEtapa()">Próximo ➜</button>
         </div>
 
@@ -38,6 +38,12 @@
             <div class="opcao-tipo" onclick="selecionarTipo('pedidoDemissao')">
                 <h3>🟡 Pedido de demissão</h3>
                 <p class="resumo">Você mesmo resolve sair da empresa por vontade própria</p>
+            </div>
+
+            <!-- ✅ OPÇÃO NOVA ADICIONADA AQUI -->
+            <div class="opcao-tipo" onclick="selecionarTipo('pedidoComAcordo')">
+                <h3>🟡🤝 Pedi para sair mas fiz acordo com o patrão</h3>
+                <p class="resumo">Você quis sair, mas combinou valores e condições com o dono da empresa</p>
             </div>
 
             <div class="opcao-tipo" onclick="selecionarTipo('consensual')">
@@ -83,7 +89,16 @@
             </div>
 
             <div class="pergunta">
-                <label>2. Se a empresa mandou você embora, foi por que você fez algo errado ou quebrou alguma regra grave?</label>
+                <label>2. Se você quis sair, fez algum acordo com o patrão?</label>
+                <div class="opcoes">
+                    <label><input type="radio" name="fezAcordo" value="sim"> Sim, combinamos valores</label>
+                    <label><input type="radio" name="fezAcordo" value="nao"> Não, só pedi e saí</label>
+                    <label><input type="radio" name="fezAcordo" value="naoAplica"> Não se aplica</label>
+                </div>
+            </div>
+
+            <div class="pergunta">
+                <label>3. Se a empresa mandou você embora, foi por que você fez algo errado ou quebrou alguma regra grave?</label>
                 <div class="opcoes">
                     <label><input type="radio" name="motivoErro" value="sim"> Sim, eu errei ou quebrei regras</label>
                     <label><input type="radio" name="motivoErro" value="nao"> Não, não fiz nada de errado</label>
@@ -92,7 +107,7 @@
             </div>
 
             <div class="pergunta">
-                <label>3. Se você quis sair, foi porque a empresa estava errada com você? (não pagou salário, mandou fazer coisa errada, etc)</label>
+                <label>4. Se você quis sair, foi porque a empresa estava errada com você? (não pagou salário, mandou fazer coisa errada, etc)</label>
                 <div class="opcoes">
                     <label><input type="radio" name="motivoEmpresa" value="sim"> Sim, a empresa não cumpriu com o combinado</label>
                     <label><input type="radio" name="motivoEmpresa" value="nao"> Não, foi por vontade minha mesmo</label>
@@ -147,7 +162,6 @@
 
         <!-- ETAPA 7: RESULTADOS FINAIS -->
         <div id="resultado" style="display: none;">
-            <!-- Os blocos de resultado continuam os mesmos que já tínhamos -->
             <div id="casoSemFerias" class="secao glass">
                 <h2>✅ Resultado com férias já tiradas</h2>
 
@@ -197,6 +211,7 @@
                 <p>💡 <strong>Explicação simples:</strong><br>
                 • Multa cheia = 40% (só ganha se for demitido sem motivo)<br>
                 • Acordo = 32% de multa<br>
+                • Pedi para sair mas fez acordo = 20% a 32% de multa<br>
                 • Pedir demissão = 0% de multa<br>
                 • Justa causa = perde quase todos os direitos</p>
             </div>

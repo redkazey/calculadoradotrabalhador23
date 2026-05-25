@@ -1,9 +1,28 @@
+// ✅ FUNÇÃO PARA ACEITAR SOMENTE LETRAS E ESPAÇOS NO NOME
+function somenteLetras(evento) {
+    var charCode = evento.keyCode || evento.which;
+    charCode = String.fromCharCode(charCode);
+    var regex = /^[A-Za-zÀ-ÿ ]+$/; // Aceita letras, acentos e espaço
+    if (!regex.test(charCode)) {
+        evento.returnValue = false;
+        return false;
+    }
+}
+
+// ✅ FUNÇÃO PARA VALIDAR QUANDO COLAR TEXTO NO CAMPO NOME
+function validarColagemNome(evento) {
+    setTimeout(() => {
+        let campo = document.getElementById('nomeUsuario');
+        campo.value = campo.value.replace(/[^A-Za-zÀ-ÿ ]/g, ''); // Remove tudo que não for letra ou espaço
+    }, 10);
+}
+
 // VARIAVEIS GLOBAIS
 let nomeUsuario = '';
 let tipoSaida = '';
 let dadosCalculo = {};
 
-// ✅ MOSTRAR OU ESCONDER CAMPO DO VALOR EXATO DO FGTS
+// MOSTRAR OU ESCONDER CAMPO DO VALOR EXATO DO FGTS
 document.addEventListener('DOMContentLoaded', function() {
     const opcoesFGTS = document.querySelectorAll('input[name="tipoFGTS"]');
     const campoExato = document.getElementById('campoFGTSexato');
@@ -36,6 +55,12 @@ function proximaEtapa() {
     nomeUsuario = document.getElementById('nomeUsuario').value.trim();
     if (!nomeUsuario) {
         alert('Por favor, digite seu nome!');
+        return;
+    }
+    // Verificar se tem só letras
+    var regexNome = /^[A-Za-zÀ-ÿ ]+$/;
+    if (!regexNome.test(nomeUsuario)) {
+        alert('Digite apenas letras no nome! Não use números nem símbolos.');
         return;
     }
     document.getElementById('textoSaudacao').textContent = `Olá ${nomeUsuario}! O que vamos calcular hoje?`;
@@ -292,7 +317,7 @@ document.getElementById('formulario').addEventListener('submit', function(e) {
 
         const totalEmpresa = saldoSalario + valorFerias + valor13 + valorAviso - totalDescontos;
 
-        // ✅ CÁLCULO DO FGTS - AUTOMÁTICO OU VALOR EXATO
+        // CÁLCULO DO FGTS - AUTOMÁTICO OU VALOR EXATO
         let saldoFGTS;
         if (tipoFGTS === 'exato') {
             saldoFGTS = valorFGTSexato;
